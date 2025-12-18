@@ -114,66 +114,148 @@ async def get_lock_list(token: str, group_id: int | None = None):
 
         return data.get("list", [])
 
-async def fetch_and_map_users(token: str, locks: list):
-    """
-    Fetches all eKeys for all locks and groups them by user.
-    """
-    user_registry = {}  # { username: [ {lockName, keyId, startDate, endDate}, ... ] }
+# async def fetch_and_map_users(token: str, locks: list):
+#     """
+#     Fetches all eKeys for all locks and groups them by user.
+#     """
+#     user_registry = {}  # { username: [ {lockName, keyId, startDate, endDate}, ... ] }
     
-    print(f"\n--- Fetching Users for {len(locks)} Locks ---")
+#     print(f"\n--- Fetching Users for {len(locks)} Locks ---")
 
-    async with httpx.AsyncClient(timeout=10.0) as client:
-        for lock in locks:
-            # First we get the ttlock account ekey permission --> After, we get the IC Card permission
-            now_ms = int(time.time() * 1000) # Need to generate this for every request
-            lock_id = lock['lockId']
-            lock_alias = lock['name']
+#     async with httpx.AsyncClient(timeout=10.0) as client:
+#         for lock in locks:
+#             # First we get the ttlock account ekey permission --> After, we get the IC Card permission
+#             now_ms = int(time.time() * 1000) # Need to generate this for every request
+#             lock_id = lock['lockId']
+#             lock_alias = lock['name']
             
-            print(f"Scanning: {lock_alias}...")
+#             print(f"Scanning: {lock_alias}...")
 
-            # API Endpoint from your documentation
-            url_ekey = f"{BASE_URL.rstrip('/')}/v3/lock/listKey"
+#             # API Endpoint from your documentation
+#             url_ekey = f"{BASE_URL.rstrip('/')}/v3/lock/listKey"
             
-            params = {
-                "clientId": CLIENT_ID,
-                "accessToken": token,
-                "lockId": str(lock_id),
-                "pageNo": "1",
-                "pageSize": "20",
-                "date": str(now_ms)
-            }
-            print(params)
-            response = await client.get(url_ekey, params=params)
-            data = response.json()
-            #print(data)
-            print(data.get("errcode"))
-            #print(data.get("list", []))
-            if data.get("errcode") is None:
-                ekeys = data.get("list", [])
-                for ekey in ekeys:
-                    print(f"This is the ekey {ekey}")
-                    username = ekey.get("username")
-                    if not username: continue
+#             params = {
+#                 "clientId": CLIENT_ID,
+#                 "accessToken": token,
+#                 "lockId": str(lock_id),
+#                 "pageNo": "1",
+#                 "pageSize": "20",
+#                 "date": str(now_ms)
+#             }
+#             print(params)
+#             response = await client.get(url_ekey, params=params)
+#             data = response.json()
+#             #print(data)
+#             print(data.get("errcode"))
+#             #print(data.get("list", []))
+#             if data.get("errcode") is None:
+#                 ekeys = data.get("list", [])
+#                 for ekey in ekeys:
+#                     print(f"This is the ekey {ekey}")
+#                     username = ekey.get("username")
+#                     if not username: continue
                     
-                    # Prepare the lock info for this user
-                    lock_info = {
-                        "lockName": lock_alias,
-                        "keyId": ekey.get("keyId"),
-                        "status": ekey.get("keyStatus"),
-                        "expiry": ekey.get("endDate"),
-                        "keyName": ekey.get("keyName")
-                    }
+#                     # Prepare the lock info for this user
+#                     lock_info = {
+#                         "lockName": lock_alias,
+#                         "keyId": ekey.get("keyId"),
+#                         "status": ekey.get("keyStatus"),
+#                         "expiry": ekey.get("endDate"),
+#                         "keyName": ekey.get("keyName")
+#                     }
 
-                    # Group by username
-                    if username not in user_registry:
-                        user_registry[username]["ekey"] = []
-                    user_registry[username]["ekey"].append(lock_info)
-            else:
-                # Capture the actual error message from TTLock
-                error_msg = data.get('description') or data.get('errmsg') or "Unknown Error"
-                print(f"  🛑 Error on {lock_alias}: {error_msg} (Code: {data.get('errcode')})")
+#                     # Group by username
+#                     if username not in user_registry:
+#                         user_registry[username]["ekey"] = []
+#                     user_registry[username]["ekey"].append(lock_info)
+#             else:
+#                 # Capture the actual error message from TTLock
+#                 error_msg = data.get('description') or data.get('errmsg') or "Unknown Error"
+#                 print(f"  🛑 Error on {lock_alias}: {error_msg} (Code: {data.get('errcode')})")
+
+#     return user_registry
+
+async def sync_access_IC_ekey(token: str, locks: list):
+    """
+    Fetches both eKeys and IC Cards for all locks.
+    Groups them into a single 'Master Registry' for database import.
+    """
+    # master_registry structure:
+    master_registry = {"ekeys": {}, "cards": {}}
+
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        for lock in locks:
+            lock_id = lock.get('lockId') or lock.get('id')
+            lock_name = lock.get('lockAlias') or lock.get('name')
+            def now_ms():
+                '''
+                Return the current time before server API call
+                '''
+                return str(int(time.time() * 1000))
+            def expiry_human(ms):
+                """
+                Convert an expiry time in milliseconds to number of days.
+                """
+                try:
+                    ms_int = int(ms)
+                    days = ms_int // (1000 * 60 * 60 * 24)
+                    return days
+                except (ValueError, TypeError):
+                    return None
+
+            print(f"--- Processing Lock: {lock_name} ---")
+
+            # 1. FETCH E-KEYS (App Users)
+            ekey_url = f"{BASE_URL}/v3/lock/listKey"
+            ekey_params = {
+                "clientId": CLIENT_ID, "accessToken": token,
+                "lockId": lock_id, "pageNo": "1", "pageSize": "200", "date": now_ms()
+            }
+            ekey_resp = await client.get(ekey_url, params=ekey_params)
+            ekey_data = ekey_resp.json()
+
+            if ekey_data.get("errcode") is None:
+                for k in ekey_data.get("list", []):
+                    # We use 'keyName' as the person's identifier (e.g., "34 - ვანო გილგემიანი")
+                    person = k.get("keyName") or k.get("username")
+                    if person not in master_registry["ekeys"]:
+                        master_registry["ekeys"][person] = []
+                    
+                    master_registry["ekeys"][person].append({
+                        "username": k.get("username"),
+                        "lockId": k.get("lockID"),
+                        "keyId": k.get("keyId"),
+                        "status": k.get("keyStatus"),
+                    })
             
-    return user_registry
+            # 2. FETCH IC CARDS (Physical Cards)
+            card_url = f"{BASE_URL}/v3/identityCard/list"
+            
+            card_params = {
+                "clientId": CLIENT_ID, "accessToken": token,
+                "lockId": lock_id, "pageNo": "1", "pageSize": "200", "date": now_ms()
+            }
+            card_resp = await client.get(card_url, params=card_params)
+            card_data = card_resp.json()
+
+            if card_data.get("errcode") is None:
+                for c in card_data.get("list", []):
+                    person = c.get("cardName") or "Unnamed Card"
+                    if person not in master_registry["cards"]:
+                        master_registry["cards"][person] = []
+                    
+                    master_registry["cards"][person].append({
+                        "cardNumber": c.get("cardNumber"),
+                        "lockId": c.get("lockId"),
+                        "cardId": c.get("cardId"),
+                        "startDate": c.get("startDate"),
+                        "endDate": c.get("endDate"),
+                        "createDate": c.get("createDate")
+                    })
+            
+            print(f"Done : {lock_name}")
+
+    return master_registry
 
 def display_user_report(user_registry):
     """Prints a clean summary of who has access to what."""
@@ -207,17 +289,20 @@ async def main():
     ]
     
     if locks:
-        # 2. Map users to those locks
-        user_data = await fetch_and_map_users(CONFIRMED_TOKEN, locks)
+        # Map users to those locks
+        user_data = await sync_access_IC_ekey(CONFIRMED_TOKEN, locks)
         
-        # 3. Print the report
-        display_user_report(user_data)
+        # Print the report
+        #display_user_report(user_data)
         
-        # 4. Optional: Save to a JSON for your own review before SQL
+        # Save to a JSON
         import json
-        with open("user_lock_map.json", "w", encoding="utf-8") as f:
+        # with open("user_lock_map.json", "w", encoding="utf-8") as f:
+        #     json.dump(user_data, f, ensure_ascii=False, indent=4)
+
+        with open("building_access_master.json", "w", encoding="utf-8") as f:
             json.dump(user_data, f, ensure_ascii=False, indent=4)
-        print("\n✅ Data exported to user_lock_map.json")
+        print("\n✅ Data exported to building_access_master.json")
 
 if __name__ == "__main__":
     import asyncio
