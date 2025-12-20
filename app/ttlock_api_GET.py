@@ -1,6 +1,5 @@
 import httpx
 import os
-import time
 from dotenv import load_dotenv
 from utils import now_ms
 
