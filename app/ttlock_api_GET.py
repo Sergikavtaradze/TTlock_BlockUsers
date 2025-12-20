@@ -62,49 +62,99 @@ async def sync_access_IC_ekey(locks: list):
     """
     # master_registry structure:
     master_registry = {"ekeys": {}, "cards": {}}
+    pageSize = 50
 
     async with httpx.AsyncClient(timeout=15.0) as client:
         for lock in locks:
             lock_id = lock.get('lockId') or lock.get('id')
             lock_name = lock.get('lockAlias') or lock.get('name')
-
             print(f"--- Processing Lock: {lock_name} ---")
 
-            # 1. FETCH E-KEYS (App Users)
-            ekey_url = f"{BASE_URL}/v3/lock/listKey"
-            ekey_params = {
-                "clientId": CLIENT_ID, "accessToken": ACCESS_TOKEN,
-                "lockId": lock_id, "pageNo": "1", "pageSize": "170", "date": now_ms()
-            }
-            ekey_resp = await client.get(ekey_url, params=ekey_params)
-            ekey_data = ekey_resp.json()
+            # ==========================================
+            # 1. FETCH E-KEYS - PAGINATED
+            # ==========================================
+            page = 1
+            while True:
+                ekey_url = f"{BASE_URL}/v3/lock/listKey"
+                ekey_params = {
+                    "clientId": CLIENT_ID, "accessToken": ACCESS_TOKEN,
+                    "lockId": lock_id, 
+                    "pageNo": str(page), 
+                    "pageSize": str(pageSize), 
+                    "date": now_ms()
+                }
 
-            if ekey_data.get("errcode") is None:
-                for k in ekey_data.get("list", []):
-                    # We use 'keyName' as the person's identifier (e.g., "34 - ვანო გილგემიანი")
-                    person = k.get("keyName") or k.get("username")
+                try:
+                    resp = await client.get(ekey_url, params=ekey_params)
+                    data = resp.json()
+                except Exception as e:
+                    print(f"  [!] Exception fetching eKeys page {page}: {e}")
+                    break
+
+                # FIX: Check if errcode is 0 (Success) or missing (Success)
+                # '0 is None' is False, so previous code failed on success.
+                if data.get("errcode", 0) != 0:
+                    print(f"  [!] API Error eKeys: {data}")
+                    break
+
+                items = data.get("list", [])
+                if not items:
+                    break  # Stop if list is empty
+
+                # Process this page
+                for k in items:
+                    person = k.get("keyName") or k.get("username") or "Unknown"
                     if person not in master_registry["ekeys"]:
                         master_registry["ekeys"][person] = []
                     
                     master_registry["ekeys"][person].append({
                         "username": k.get("username"),
-                        "lockId": k.get("lockID"),
+                        "lockId": k.get("lockId"),
                         "keyId": k.get("keyId"),
                         "status": k.get("keyStatus"),
+                        "lockName": lock_name # Added for context
                     })
-            
-            # 2. FETCH IC CARDS (Physical Cards)
-            card_url = f"{BASE_URL}/v3/identityCard/list"
-            
-            card_params = {
-                "clientId": CLIENT_ID, "accessToken": ACCESS_TOKEN,
-                "lockId": lock_id, "pageNo": "1", "pageSize": "460", "date": now_ms()
-            }
-            card_resp = await client.get(card_url, params=card_params)
-            card_data = card_resp.json()
+                
+                print(f"  -> Fetched {len(items)} eKeys (Page {page})")
 
-            if card_data.get("errcode", 0) == 0:
-                for c in card_data.get("list", []):
+                # If fewer items than requested, we are on the last page
+                # And the infinite while loop breaks
+                if len(items) < pageSize:
+                    break
+                page += 1
+            
+            # ==========================================
+            # 2. FETCH IC CARDS - PAGINATED -> Same download logic -> different URL and Storing logic
+            # ==========================================
+            page = 1
+            while True:
+                card_url = f"{BASE_URL}/v3/identityCard/list"
+                card_params = {
+                    "clientId": CLIENT_ID, "accessToken": ACCESS_TOKEN,
+                    "lockId": lock_id, 
+                    "pageNo": str(page), 
+                    "pageSize": str(pageSize), 
+                    "date": now_ms()
+                }
+
+                try:
+                    resp = await client.get(card_url, params=card_params)
+                    data = resp.json()
+                except Exception as e:
+                    print(f"  [!] Exception fetching Cards page {page}: {e}")
+                    break
+
+                # FIX: Correct Error Check
+                if data.get("errcode", 0) != 0:
+                    print(f"  [!] API Error Cards: {data}")
+                    break
+
+                items = data.get("list", [])
+                if not items:
+                    break
+
+                # Process this page
+                for c in items:
                     person = c.get("cardName") or "Unnamed Card"
                     if person not in master_registry["cards"]:
                         master_registry["cards"][person] = []
@@ -115,8 +165,15 @@ async def sync_access_IC_ekey(locks: list):
                         "cardId": c.get("cardId"),
                         "startDate": c.get("startDate"),
                         "endDate": c.get("endDate"),
-                        "createDate": c.get("createDate")
+                        "createDate": c.get("createDate"),
+                        "lockName": lock_name
                     })
+
+                print(f"  -> Fetched {len(items)} Cards (Page {page})")
+
+                if len(items) < pageSize:
+                    break
+                page += 1
             
             print(f"Done : {lock_name}")
 
@@ -164,73 +221,10 @@ async def main():
         # with open("user_lock_map.json", "w", encoding="utf-8") as f:
         #     json.dump(user_data, f, ensure_ascii=False, indent=4)
 
-        with open("building_access_master_170_460.json", "w", encoding="utf-8") as f:
+        with open("building_access_master_2.json", "w", encoding="utf-8") as f:
             json.dump(user_data, f, ensure_ascii=False, indent=4)
-        print("\n✅ Data exported to building_access_master.json")
+        print("\nData exported to building_access_master.json")
 
 if __name__ == "__main__":
     import asyncio
     asyncio.run(main())
-
-
-
-    # async def fetch_and_map_users(token: str, locks: list):
-#     """
-#     Fetches all eKeys for all locks and groups them by user.
-#     """
-#     user_registry = {}  # { username: [ {lockName, keyId, startDate, endDate}, ... ] }
-    
-#     print(f"\n--- Fetching Users for {len(locks)} Locks ---")
-
-#     async with httpx.AsyncClient(timeout=10.0) as client:
-#         for lock in locks:
-#             # First we get the ttlock account ekey permission --> After, we get the IC Card permission
-#             now_ms = int(time.time() * 1000) # Need to generate this for every request
-#             lock_id = lock['lockId']
-#             lock_alias = lock['name']
-            
-#             print(f"Scanning: {lock_alias}...")
-
-#             # API Endpoint from your documentation
-#             url_ekey = f"{BASE_URL.rstrip('/')}/v3/lock/listKey"
-            
-#             params = {
-#                 "clientId": CLIENT_ID,
-#                 "accessToken": token,
-#                 "lockId": str(lock_id),
-#                 "pageNo": "1",
-#                 "pageSize": "20",
-#                 "date": str(now_ms)
-#             }
-#             print(params)
-#             response = await client.get(url_ekey, params=params)
-#             data = response.json()
-#             #print(data)
-#             print(data.get("errcode"))
-#             #print(data.get("list", []))
-#             if data.get("errcode") is None:
-#                 ekeys = data.get("list", [])
-#                 for ekey in ekeys:
-#                     print(f"This is the ekey {ekey}")
-#                     username = ekey.get("username")
-#                     if not username: continue
-                    
-#                     # Prepare the lock info for this user
-#                     lock_info = {
-#                         "lockName": lock_alias,
-#                         "keyId": ekey.get("keyId"),
-#                         "status": ekey.get("keyStatus"),
-#                         "expiry": ekey.get("endDate"),
-#                         "keyName": ekey.get("keyName")
-#                     }
-
-#                     # Group by username
-#                     if username not in user_registry:
-#                         user_registry[username]["ekey"] = []
-#                     user_registry[username]["ekey"].append(lock_info)
-#             else:
-#                 # Capture the actual error message from TTLock
-#                 error_msg = data.get('description') or data.get('errmsg') or "Unknown Error"
-#                 print(f"  🛑 Error on {lock_alias}: {error_msg} (Code: {data.get('errcode')})")
-
-#     return user_registry
