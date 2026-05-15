@@ -1,0 +1,73 @@
+Payer,Matched User,Match Method,Amount,Fee,Payment Type,Notes,Old Debt,New Debt,Action,TTLock ID
+"ნინო ჭიტაძე, 65044000001",ნინო ჭიტაძე,Payment Partner (Name Match),24.0,25 ₾,FLAG: Other Expense,"Paid 24.0, Fee 25.0 (Not a multiple)",-1.0,-25.0,UNFREEZE,
+"არჩილ ხაბეიშვილი, 01015000153",არჩილ ხაბეიშვილი,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,5.0,-20.0,UNFREEZE,255874008.0
+"ირაკლი ოთარაშვილი, 01022000705",ირაკლი ოთარაშვილი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874110.0
+ხინთიბიძე ირაკლი,UNKNOWN,FAILED,40.0,,,Desc: 86.დეკემბერი,,,MANUAL REVIEW,
+"შპს მარსი, 405099058",UNKNOWN,FAILED,170.0,,,"Desc: საწევრო შენატანი ბინათმესაკუთრეთა ამხანაგობაში 2025-12, ხელშ. 23.04.2025",,,MANUAL REVIEW,
+"ვანო გიგლემიანი, 01017012662",ვანო გიგლემიანი,Payment Partner (Name Match),40.0,40 ₾,Standard Rent,1 Month,-5.0,-45.0,UNFREEZE,255873936.0
+ოლეკსანდრ ტიმოფიეიევ,ლედი უმეკაშვილი,"Apt Desc (19) - DB UPDATED with new partner: ოლეკსანდრ ტიმოფიეიევ, 11111111111.0",15.0,35 ₾,FLAG: Other Expense,"Paid 15.0, Fee 35.0 (Not a multiple)",0.0,-15.0,UNFREEZE,255874020.0
+"ყოლბაია სალომე, 19001087541",სალომე ყოლბაია,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874026.0
+"ნატალია კეკელიძე, 01024024781",თამარ ტატიშვილი,Payment Partner (Name Match),40.0,40 ₾,Standard Rent,1 Month,0.0,-40.0,UNFREEZE,255874198.0
+შპს ლემონდუ გროუს კაპიტალი,UNKNOWN,FAILED,250.0,,,Desc: ლემონდუ დეკემბერი,,,MANUAL REVIEW,
+მამაიაშვილი ნანი,ნანი მამაიაშვილი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874018.0
+"ნათია ფარესაშვილი, 01006004432",ნათია ფარესაშვილი,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,0.0,-35.0,UNFREEZE,255873974.0
+"სარა ხალიდ ლაკდავალა, IN,U0131254",UNKNOWN,FAILED,25.0,,,Desc: elevator ??,,,MANUAL REVIEW,
+"სარა ხალიდ ლაკდავალა, IN,U0131254",UNKNOWN,FAILED,25.0,,,Desc: elevator for december :),,,MANUAL REVIEW,
+"ზვიად ანდღულაძე, 01031001657",გიორგი ანდღულაძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,2.0,-28.0,UNFREEZE,255874036.0
+"ი/მ კონსტანტინე იორდანიშვილი, 01010001846",კონსტანტინე იორდანიშვილი,Payment Partner (Name Match),40.0,40 ₾,Standard Rent,1 Month,0.0,-40.0,UNFREEZE,
+"ი/მ ნინო ამირანაშვილი, 01001092630",ოთარაშვილი (BOG),"Apt Desc (73) - DB UPDATED with new partner: ი/მ ნინო ამირანაშვილი, 01001092630, 1001092630.0",60.0,20 ₾,Prepayment / Arrears,3 Months,20.0,-40.0,UNFREEZE,255873958.0
+Sviazinska Liliia,UNKNOWN,FAILED,30.0,,,Desc: .15 December,,,MANUAL REVIEW,
+ოლგა შჩეგლოვა,ლედი უმეკაშვილი,Payment Partner (ID Match),20.0,35 ₾,FLAG: Other Expense,"Paid 20.0, Fee 35.0 (Not a multiple)",0.0,-20.0,UNFREEZE,255874020.0
+"ი/მ გიორგი დავითიანი, 01024072078",ვლადიმერ დავითიანი,Payment Partner (Name Match),50.0,25 ₾,Prepayment / Arrears,2 Months,0.0,-50.0,UNFREEZE,255873986.0
+"მარიამი დარსალია, 48201028397",ჯამბული გოგუა,Payment Partner (Name Match),60.0,30 ₾,Prepayment / Arrears,2 Months,0.0,-60.0,UNFREEZE,255874280.0
+შპს ჯენერალ რეფროდაქთივე ქაუნსელინგ - გოლდ ენჯელ ქლინიქ,რუსუდან კვაჭაძე,"Apt Desc (5) - DB UPDATED with new partner: შპს ჯენერალ რეფროდაქთივე ქაუნსელინგ - გოლდ ენჯელ ქლინიქ, 430048637.0",90.0,25 ₾,FLAG: Other Expense,"Paid 90.0, Fee 25.0 (Not a multiple)",0.0,-90.0,UNFREEZE,255873950.0
+"ირფან შაჯი, IN,V2307387",UNKNOWN,FAILED,20.0,,,Desc: room no 49ა,,,MANUAL REVIEW,
+"ჟანა დუნდუა-სირაძე, 42001012366",ჟანა დუნდუა-სირაძე,Payment Partner (Name Match),50.0,25 ₾,Prepayment / Arrears,2 Months,5.0,-45.0,UNFREEZE,255873942.0
+"მაყვალა ვახტანგიძე, 62001001937",UNKNOWN,FAILED,25.0,,,Desc: ბ.51 დეკემბერი,,,MANUAL REVIEW,
+"დავით ჭიჭინაძე, 01021008324",დავით ჭიჭინაძე,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255873972.0
+ვაშაძე საბა,მარინა ჯაფარიძე,Payment Partner (Name Match),45.0,25 ₾,FLAG: Other Expense,"Paid 45.0, Fee 25.0 (Not a multiple)",0.0,-45.0,UNFREEZE,255873994.0
+ტატიშვილი-სმიტი ელენე,ალბი ვინსტონ სმიტი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874118.0
+"მიხეილი კიბილოვი, 01010008164",მიხეილ კიბილოვი,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255873966.0
+"თეა ფერაძე, 01009001755",ვაჟა ფერაძე,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,0.0,-35.0,UNFREEZE,255873956.0
+"ანდრეი სიალილა, BY,MP4582674",მარინა ლობჟანიძე,"Apt Desc (79) - DB UPDATED with new partner: ანდრეი სიალილა, BY,MP4582674, nan",25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,
+ლავრუხინ ივან,UNKNOWN,FAILED,30.0,,,Desc: 66. December,,,MANUAL REVIEW,
+სოფიია კოლოდიაჟნაია,ლედი უმეკაშვილი,Payment Partner (ID Match),25.0,35 ₾,FLAG: Other Expense,"Paid 25.0, Fee 35.0 (Not a multiple)",0.0,-25.0,UNFREEZE,255874020.0
+"მაია ბიგვავა, 62006003052",სოფიო შარაშენიძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874048.0
+"ანა აბაშიძე, 01025014547",ვარლამ ანდღულაძე,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255874038.0
+"მარეხ მინაძე, 03001005076",მარეხ მინაძე,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,
+"მამუკა დიასამიძე, 61001076408",მამუკა დიასამიძე,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,5.0,-30.0,UNFREEZE,258723962.0
+"ი/მ სალომე ჩაგანავა, 02001020933",ირმა ჩაგანავა,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255873940.0
+რობაქიძე გიორგი,ხათუნა მახათაძე,Payment Partner (Name Match),35.0,30 ₾,FLAG: Other Expense,"Paid 35.0, Fee 30.0 (Not a multiple)",35.0,0.0,UNFREEZE,
+"გვანცა ჩხვიმიანი, 52001020260",რამაზ გიგლემიანი (+69),"Apt Desc (14) - DB UPDATED with new partner: გვანცა ჩხვიმიანი, 52001020260, 52001020260.0",70.0,40 ₾,FLAG: Other Expense,"Paid 70.0, Fee 40.0 (Not a multiple)",5.0,-65.0,UNFREEZE,255874006.0
+"ნათია ჯაფარიძე, 62004022727",ნათია ჯაფარიძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874204.0
+"ვანო გიგლემიანი, 01017012662",ვანო გიგლემიანი,Payment Partner (Name Match),40.0,40 ₾,Standard Rent,1 Month,-5.0,-45.0,UNFREEZE,255873936.0
+"მალხაზ გვარამაძე, 01024050505",მალხაზ გვარამაძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255874284.0
+"ნონა აბუთიძე, 38001006545",ემზარ ნოზაძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255873970.0
+"ხათუნა ეფრემიძე, 60002000191",ნანა გოგია,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,225.0,200.0,FREEZE (Still in Debt),255874192.0
+"თამარი გოდუაძე, 60001089042",UNKNOWN,FAILED,25.0,,,Desc: დეკემბერი ბინა#37,,,MANUAL REVIEW,
+"ი/მ ლაშა კილასონია, 42001032213",ნატო მიქაძე,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255874022.0
+"მარინა კვირკველია, 01027068759",,"Apt Desc (49) - DB UPDATED with new partner: მარინა კვირკველია, 01027068759, 1027068759.0",20.0,,Fee Unknown,Check DB configuration,0.0,-20.0,UNFREEZE,255873928.0
+"რამაზ გიგლემიანი, 01006013295",რამაზ გიგლემიანი (+69),Payment Partner (Name Match),70.0,40 ₾,FLAG: Other Expense,"Paid 70.0, Fee 40.0 (Not a multiple)",5.0,-65.0,UNFREEZE,258722282.0
+ენუქიძე თამარი,თამარი ენუქიძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255873978.0
+რობაქიძე გიორგი,ხათუნა მახათაძე,Payment Partner (Name Match),70.0,30 ₾,FLAG: Other Expense,"Paid 70.0, Fee 30.0 (Not a multiple)",35.0,-35.0,UNFREEZE,
+"ლაშა ბადაშვილი, 01008061353",მაია მჭედლიშვილი,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255873976.0
+"აკაკი ვაწაძე, 01024075586",გიორგი ვაწაძე,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,0.0,-35.0,UNFREEZE,255873990.0
+კვაჭაძე დიმიტრი,რუსუდან კვაჭაძე,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,258722226.0
+"სალომე აბუთიძე, 01005018890",ალექსანდრე ქამუშაძე,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255873982.0
+"ნინო კვანტალიანი, 62001046092",სერგო კვანტალიანი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255873918.0
+"ნინო კვანტალიანი, 62001046092",სერგო კვანტალიანი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,255873918.0
+"ირმა ბუხნიკაშვილი, 01024024629",ირმა ბუხნიკაშვილი,Payment Partner (Name Match),22.0,25 ₾,FLAG: Other Expense,"Paid 22.0, Fee 25.0 (Not a multiple)",0.0,-22.0,UNFREEZE,255874114.0
+შელია მაია,ირაკლი შანავა,Payment Partner (Name Match),70.0,35 ₾,Prepayment / Arrears,2 Months,0.0,-70.0,UNFREEZE,255874176.0
+"იულია ლომინაძე, GE,23PR01441",UNKNOWN,FAILED,100.0,,,Desc: bina 39a,,,MANUAL REVIEW,
+"გურამ თოფურია, 42001035664",ეთერი თოფურია (82),Payment Partner (Name Match),80.0,40 ₾,Prepayment / Arrears,2 Months,0.0,-80.0,UNFREEZE,
+"ირმა ბუხნიკაშვილი, 01024024629",ირმა ბუხნიკაშვილი,Payment Partner (Name Match),3.0,25 ₾,FLAG: Other Expense,"Paid 3.0, Fee 25.0 (Not a multiple)",0.0,-3.0,UNFREEZE,255874114.0
+ნიორაძე ლევან,ლევან ნიორაძე,Payment Partner (Name Match),60.0,30 ₾,Prepayment / Arrears,2 Months,0.0,-60.0,UNFREEZE,255873984.0
+"სოფიია ილინა, RU,75 3542207",ვაჟა მაჭარაძე,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,0.0,-35.0,UNFREEZE,255874028.0
+"მარიკა ლურსმანაშვილი, 11001010205",დავით ქარქაშაძე,"Apt Desc (85) - DB UPDATED with new partner: მარიკა ლურსმანაშვილი, 11001010205, 11001010205.0",35.0,35 ₾,Standard Rent,1 Month,15.0,-20.0,UNFREEZE,261216960.0
+"ლედი უმეკაშვილი, 43001023905",ლედი უმეკაშვილი,Payment Partner (Name Match),35.0,35 ₾,Standard Rent,1 Month,0.0,-35.0,UNFREEZE,258722296.0
+"მარიამი შილაკაძე, 33001073006",გიორგი ტოკლიკიშვილი,Payment Partner (Name Match),30.0,30 ₾,Standard Rent,1 Month,0.0,-30.0,UNFREEZE,
+ფარცვანია დიმიტრი,ვლადიმერ ფარცვანია,Payment Partner (Name Match),25.0,25 ₾,Standard Rent,1 Month,0.0,-25.0,UNFREEZE,255874052.0
+"პაატა მუჯირი, 01027003975",UNKNOWN,FAILED,100.0,,,Desc: პაატა მუჯირი,,,MANUAL REVIEW,
+"რუსუდან აგლაძე, 01024035631",რუსუდან აგლაძე,Payment Partner (Name Match),70.0,35 ₾,Prepayment / Arrears,2 Months,-35.0,-105.0,UNFREEZE,255874178.0
+ეფრემიძე ხათუნა,UNKNOWN,FAILED,300.0,,,Desc: იულია ლომინაძე 39ა ეზოსთვის,,,MANUAL REVIEW,
+"საქინა ალახვერდოვი, 01017042904",ირაკლი ოთარაშვილი,"Apt Desc (16) - DB UPDATED with new partner: საქინა ალახვერდოვი, 01017042904, 1017042904.0",200.0,30 ₾,FLAG: Other Expense,"Paid 200.0, Fee 30.0 (Not a multiple)",0.0,-200.0,UNFREEZE,255874110.0
